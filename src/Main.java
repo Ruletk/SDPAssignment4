@@ -1,11 +1,16 @@
 import interpreter.Interpreter;
 import memento.TextEditorMemento;
+import observer.FirstNewsChannel;
+import observer.NewsAgency;
+import observer.Observer;
+import observer.SecondNewsChannel;
 
 
 public class Main {
     public static void main(String[] args) {
 //        testExpression();
-        testMemento();
+//        testMemento();
+        testObserver();
     }
 
     public static void testExpression() {
@@ -43,5 +48,34 @@ public class Main {
         System.out.println(editor.getText()); //
 
 
+    }
+
+    public static void testObserver() {
+        NewsAgency observable = new NewsAgency();
+        Observer observer1 = new FirstNewsChannel();
+        Observer observer2 = new SecondNewsChannel();
+
+        observable.addObserver(observer1);
+        observable.addObserver(observer2);
+
+        observable.addNews("first news");
+        System.out.println("----");
+
+        observable.addNews("second news");
+        System.out.println("----");
+
+        observable.addNews("third news");
+        System.out.println("----");
+
+        observable.removeObserver(observer1);
+
+        observable.addNews("fourth news");
+        System.out.println("----");
+
+        observable.removeObserver(observer2);
+        observable.addObserver(observer1);
+
+        observable.addNews("fifth news");
+        System.out.println("----");
     }
 }
